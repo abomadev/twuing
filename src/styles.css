@@ -87179,3 +87179,7 @@ video {
     transition-delay: 1000ms;
   }
 }
+
+pre[class*="language-"] {
+    background: #2d3748;
+  }

@@ -1,5 +1,6 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, HostListener, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { ParserService } from '../services/parser.service';
+import { InstructionsService } from '../services/instructions.service';
 
 @Component({
   selector: 'app-home',
@@ -8,15 +9,23 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  @ViewChild('results') resultsRef: ElementRef;
+
+  html;
+  ts;
+  instructionsList;
+  show: 'html' | 'typescript' = 'html'
+  constructor(private parserService: ParserService, public instructionsService: InstructionsService) { }
+
 
   ngOnInit() {
+    this.html = this.parserService.parsedHtml.asObservable()
+    this.ts = this.parserService.parsedTypescript.asObservable()
+    this.instructionsList = this.instructionsService.instructionsList.asObservable()
   }
 
   @HostListener('paste', ['$event'])
   onPaste(paste) {
-    console.log('PASTE OCCURED', paste, paste.clipboardData.getData('text'));
-    this.router.navigate(['/result'])
+    this.resultsRef.nativeElement.scrollIntoView();
  }
-
 }

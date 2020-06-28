@@ -1,0 +1,17 @@
+{
+  "name": "tw-cheatsheet-scrapper",
+  "version": "1.0.0",
+  "description": "Scapes Tailwind CSS classes from https://nerdcave.com/tailwind-cheat-sheet and saves them into a format suitable for TWUING",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "fs": "0.0.1-security",
+    "puppeteer": "^4.0.1",
+    "request-promise": "^4.2.5"
+  }
+}
