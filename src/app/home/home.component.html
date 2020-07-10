@@ -1,4 +1,3 @@
-
 <app-header></app-header>
 <!-- <div id="header" class="bg-gray-50 h-16 w-screen border-b-2 border-gray-400 px-4 flex flex-col justify-center">
   <p class="text-gray-600 font-bold text-2xl">TWUI->NG</p>
@@ -7,36 +6,41 @@
 <div id="sticky-header" class="relative pt-6 pb-4 sm:pb-8 md:pb-12 xl:pb-26">
   <div class="max-w-screen-xl mx-auto px-4 sm:px-6">
     <nav class="relative flex items-center justify-between sm:h-10 md:justify-center">
-      <div class="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0">
-        <div class="flex items-center justify-between w-full md:w-auto">
-          <h4 routerLink="/" class="flex justify-center items-center text-2xl tracking-tight leading-10 font-extrabold text-gray-900 sm:text-3xl sm:leading-none">
+      <div class="flex items-center flex-1 md:inset-y-0 md:left-0">
+        <div class="flex items-center justify-between w-full ">
+          <h4 routerLink="/"
+            class="flex justify-center items-center text-2xl tracking-tight leading-10 font-extrabold text-gray-900 sm:text-3xl sm:leading-none">
             TWUI
             <span class="text-indigo-600">NG</span>
           </h4>
-          <div class="-mr-2 flex items-center md:hidden">
-            <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" id="main-menu" aria-label="Main menu" aria-haspopup="true">
-              <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
+
+
+            <div class="ml-3 relative">
+                <button (click)="toggle0()"
+                  class="flex text-sm focus:outline-none text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out"
+                  id="user-menu" aria-label="User menu" aria-haspopup="true">
+                  <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z">
+                    </path>
+                  </svg>
+
+                </button>
+
+              <!-- Dropdown menu -->
+              <div @trigger0 *ngIf='show0' class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
+                <div class="py-1 rounded-md bg-white shadow-xs">
+                  <a (click)="auth.signOut()"
+                    class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">Sign
+                    out</a>
+                </div>
+              </div>
+            </div>
+
+
+
         </div>
       </div>
-      <!-- <div class="hidden md:block">
-        <a href="#" class="ml-10 font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out">Features
-        </a>
-        <a href="#" class="ml-10 font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out">Marketplace
-        </a>
-        <a href="#" class="ml-10 font-medium text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out">Company
-        </a>
-      </div>
-      <div class="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
-        <span class="inline-flex rounded-md shadow">
-          <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-white hover:text-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-700 transition duration-150 ease-in-out">
-            Log in
-          </a>
-        </span>
-      </div> -->
     </nav>
   </div>
 </div>
@@ -46,35 +50,41 @@
   </div>
   <div *ngIf="instructionsList | async as instructions" class="w-2/6 h-screen flex flex-col items-center py-24 px-4">
     <div>
-        <h3 class="mt-2 text-lg leading-7 font-semibold text-gray-900">
-          Additional steps
-        </h3>
+      <h3 class="mt-2 text-lg leading-7 font-semibold text-gray-900">
+        Additional steps
+      </h3>
 
-        <div *ngFor="let i of instructions">
-          <p class="mt-3 text-sm leading-6 text-gray-600">
-            <span class="font-bold">{{ i.id }}</span>: {{ i.description}}
-          </p>
-          <div *ngIf="i.markdown" class="rounded-md bg-gray-800">
-            <div class="flex">
-              <div>
-                <div  class="relative text-sm" [innerHTML]="i.markdown | language : 'typescript' | markdown"></div>
-              </div>
-              <div class="ml-auto pl-3">
-                <div class="-mx-1.5 -my-1.5">
-                  <button ngxClipboard [cbContent]="i.markdown" class="inline-flex rounded-md p-2 focus:outline-none transition ease-in-out duration-150">
-                    <svg  class="h-8 text-gray-600 hover:text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                  </button>
-                </div>
+      <div *ngFor="let i of instructions">
+        <p class="mt-3 text-sm leading-6 text-gray-600">
+          <span class="font-bold text-indigo-600 w-12">{{ i.id }}.</span>&#9;&#9;{{ i.description}}
+        </p>
+        <div *ngIf="i.markdown" class="rounded-md bg-gray-800">
+          <div class="flex">
+            <div>
+              <div class="relative text-sm" [innerHTML]="i.markdown | language : 'typescript' | markdown"></div>
+            </div>
+            <div class="ml-auto pl-3">
+              <div class="-mx-1.5 -my-1.5">
+                <button ngxClipboard [cbContent]="i.markdown"
+                  class="inline-flex rounded-md p-2 focus:outline-none transition ease-in-out duration-150">
+                  <svg class="h-8 text-gray-600 hover:text-gray-400" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                    </path>
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
-          <!-- <div *ngIf="i.markdown">
+        </div>
+        <!-- <div *ngIf="i.markdown">
             <div  class="relative text-sm" [innerHTML]="i.markdown | language : 'typescript' | markdown"></div>
             <div  class="absolute inline-flex mr-2 right-0">
               <svg  class="h-8 text-gray-600 hover:text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
             </div>
           </div> -->
-        </div>
+      </div>
     </div>
   </div>
 </div>

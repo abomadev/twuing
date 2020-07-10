@@ -25,7 +25,8 @@
             ],
             "styles": [
               "node_modules/prismjs/themes/prism-okaidia.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/custom-styles.css"
             ],
             "scripts": [
               "node_modules/clipboard/dist/clipboard.min.js",
@@ -123,6 +124,10 @@
               "devServerTarget": "twuing:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }

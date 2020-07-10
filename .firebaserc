@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "twuing-dev"
+  },
+  "targets": {
+    "twuing-dev": {
+      "hosting": {
+        "twuing": [
+          "twuing-dev"
+        ]
+      }
+    }
   }
 }

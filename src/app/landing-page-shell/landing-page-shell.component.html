@@ -1,0 +1,60 @@
+<div class="fixed bottom-0 inset-x-0 sm:inset-0 sm:p-0">
+
+
+
+   
+  
+  
+  <ng-container>
+      <router-outlet></router-outlet>
+
+  </ng-container>
+  
+  
+  
+    <!--
+      Background overlay, show/hide based on modal state.
+  
+      Entering: "ease-out duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "ease-in duration-200"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+    <div @trigger1 *ngIf='show1' class="fixed inset-0 transition-opacity z-1 flex items-center justify-center">
+      <div (click)="toggle1()" class="absolute inset-0 bg-gray-500 opacity-75"></div>
+      <!--
+      Modal panel, show/hide based on modal state.
+  
+      Entering: "ease-out duration-300"
+        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        To: "opacity-100 translate-y-0 sm:scale-100"
+      Leaving: "ease-in duration-200"
+        From: "opacity-100 translate-y-0 sm:scale-100"
+        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    -->
+  
+      <div @trigger2
+        class="bg-white rounded-lg m-4 overflow-hidden shadow-xl transform transition-all sm:max-w-5xl sm:w-full">
+        <div class="relative">
+            
+            <video class="w-full h-full" #video src="/assets/twuing-demo-short.mp4" [autoplay]='true' [loop]='true'
+            [muted]='true'>
+        </video>
+        <!-- Content goes here -->
+        <svg (click)="toggle1()" class="absolute h-6 top-0 m-2 right-0 text-gray-400 hover:text-gray-200 z-10" fill="currentColor"
+          viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"></path>
+        </svg>
+  
+        </div>
+      </div>
+    </div>
+  
+  
+  </div>
+  
+  

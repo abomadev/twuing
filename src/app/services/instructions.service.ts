@@ -20,8 +20,8 @@ export class InstructionsService {
   constructor() { }
 
   add(i: Instruction){
-    this.instructions.push({...i, id: this.counter})
     this.counter +=1
+    this.instructions.push({...i, id: this.counter})
     this.instructionsList.next(this.instructions)
   }
 

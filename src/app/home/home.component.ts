@@ -1,11 +1,25 @@
 import { Component, HostListener, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { ParserService } from '../services/parser.service';
 import { InstructionsService } from '../services/instructions.service';
+import { AuthService } from '../auth/auth.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations: [ 
+    trigger('trigger0', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(.95)' }),
+        animate('200ms ease-out', style({  opacity: 1, transform: 'scale(1)' }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1, transform: 'scale(1)' }),
+        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
 
@@ -15,7 +29,11 @@ export class HomeComponent implements OnInit {
   ts;
   instructionsList;
   show: 'html' | 'typescript' = 'html'
-  constructor(private parserService: ParserService, public instructionsService: InstructionsService) { }
+
+  show0 = false;
+
+
+  constructor(private parserService: ParserService, public instructionsService: InstructionsService, public auth: AuthService) { }
 
 
   ngOnInit() {
@@ -26,6 +44,10 @@ export class HomeComponent implements OnInit {
 
   @HostListener('paste', ['$event'])
   onPaste(paste) {
-    this.resultsRef.nativeElement.scrollIntoView();
+    // this.resultsRef.nativeElement.scrollIntoView();
  }
+
+ toggle0(){
+  this.show0 = !this.show0;
+}
 }

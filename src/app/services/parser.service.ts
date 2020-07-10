@@ -38,11 +38,12 @@ export class ParserService {
   // RegEx expressions
   reComment = /((?=<!--)([\s\S]*?)-->)/m
   reShowHide = /(show\/hide)/m
+  reOnOff = /On:(.*)Off:(.*)/g
   reAnimation = /(Entering:[^]*From:[^]*To:[^]*Leaving:[^]*From:[^]*To:[^]*")/m
 
   animations = '';
   imports = `import { Component } from '@angular/core';
-    `;
+`;
   componentVariables= ''
   componentFunctions = ''
 
@@ -68,8 +69,6 @@ export class ParserService {
     let resultHtml = ''
     while (true) {
       const commentMatch = tempText.match(this.reComment)
-
-      console.log("COMMENT MATCH", commentMatch)
 
       if (!commentMatch) {
         resultHtml += tempText
@@ -104,24 +103,25 @@ export class ParserService {
 
   processComment(comment: string) {
     const toggleMatch = comment.match(this.reShowHide)
-    const toggleWithAnimation = comment.match(this.reAnimation)
+    const toggleWithAnimationMatch = comment.match(this.reAnimation)
+    const onOffMatch = comment.match(this.reOnOff)
 
     // Show/Hide with Animation
-    if (toggleMatch && toggleWithAnimation) {
-      console.log("ANIMATION", toggleWithAnimation)
+    if (toggleMatch && toggleWithAnimationMatch) {
+      console.log("ANIMATION", toggleWithAnimationMatch)
 
       // Add animations imports
       if (!this.imports.includes(`import { trigger, transition, style, animate } from '@angular/animations';`)) { 
-        this.imports += `import { trigger, transition, style, animate } from '@angular/animations';
-    `;
+        this.imports += `
+    import { trigger, transition, style, animate } from '@angular/animations';`;
       // Add instruction on how to trigger animation
       this.instructionsService.add({
-        description: `import BrowserAnimationsModule in app.module.ts`
+        description: `Add BrowserAnimationsModule to the imports array of app.module.ts`
       })
         // Remember to import BrowserAnimationsModule in app.module.ts
       }
       // Creates an animation and returns trigger
-      const trigger = this.animationsService.addTsAnimation(toggleWithAnimation[0], this.uniqueId)
+      const trigger = this.animationsService.addTsAnimation(toggleWithAnimationMatch[0], this.uniqueId)
 
       // Add toggle function
       this.componentVariables += `
@@ -137,13 +137,16 @@ export class ParserService {
         description: `Add to where ever you want to trigger ${trigger}`,
         markdown: `(click)="toggle${this.uniqueId}()"`
       })
-
       return {trigger: trigger, condition: `show${this.uniqueId}`}
-    } else if (!toggleMatch && toggleWithAnimation) {
+
+    } else if (!toggleMatch && toggleWithAnimationMatch) {
       console.log("OTHER ANIMATION", comment)
 
-    } else if (toggleMatch && !toggleWithAnimation) {
+    } else if (toggleMatch && !toggleWithAnimationMatch) {
       console.log("SHOW HIDE", comment)
+
+    } else if (onOffMatch) {
+      console.log("ON OFF", comment, onOffMatch.length)
 
     } else {
       console.log("UNKNOWN", comment)
@@ -154,8 +157,7 @@ export class ParserService {
   reset(){
     this.uniqueId = 0;
     this.animations = '';
-    this.imports = `import { Component } from '@angular/core';
-      `;
+    this.imports = `import { Component } from '@angular/core';`;
     this.componentVariables= ''
     this.componentFunctions = ''
   }
